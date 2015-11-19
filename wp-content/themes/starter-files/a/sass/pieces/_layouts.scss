@@ -1,0 +1,14 @@
+// PAGE LAYOUTS
+
+/*  Page Containers */
+.wrap {
+	margin: 0 auto;
+	max-width: 1380px;
+	padding: 0 20px;
+	box-sizing: border-box;
+	position: relative;
+	
+	@media screen and (min-width: $medium) {		
+		padding: 0 40px;
+	}
+}
