@@ -3,6 +3,14 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     
+    // this is a very, very , very simple templating engine.
+    codekit: {      
+      dist: {
+        src : 'a/kit/**/*.kit',
+        dest : 'templates'
+      }      
+    },
+    
 	// Run Sass to compile all of our CSS
 	sass: {            
       dist: {
@@ -39,7 +47,7 @@ module.exports = function(grunt) {
       dist: {        
         files: {
           'js/jquery-min.js' : 'a/js/jquery/jquery-2.1.4.js',
-          'js/script-min.js' : ['a/js/plugins/*.js', 'source/a/js/script.js']          
+          'js/script-min.js' : ['a/js/plugins/*.js', 'a/js/script.js']          
         }        
       }      
     }, 
@@ -52,7 +60,12 @@ module.exports = function(grunt) {
         livereload: true
       },
       
-		sass: {
+		kit: {
+	        files: ['a/kit/**/*.kit'],
+	        tasks: ['codekit']
+	     },
+	      
+	    sass: {
 	        files: ['a/sass/**/*.scss'],
 	        tasks: ['sass']
 	    },
@@ -75,12 +88,13 @@ module.exports = function(grunt) {
 
   });
  
+  grunt.loadNpmTasks('grunt-codekit');
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-postcss');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-uglify');  
   grunt.loadNpmTasks('grunt-contrib-watch');
   
-  grunt.registerTask('default', ['sass', 'postcss', 'jshint', 'uglify', 'watch']);
+  grunt.registerTask('default', ['codekit', 'sass', 'postcss', 'jshint', 'uglify', 'watch']);
   
 };
